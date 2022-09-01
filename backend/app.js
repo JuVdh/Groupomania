@@ -4,7 +4,7 @@ const express = require('express');
 const helmet = require('helmet');
 
 const initDB = require('./models/initdb');
-//const UserCtrl = require('./controllers/user');
+const UserCtrl = require('./controllers/user');
 const PostCtrl = require('./controllers/post');
 
 //const postRoutes = require('./routes/post');
@@ -44,7 +44,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 initDB().then(() => {
-  //UserCtrl.gets();
+  UserCtrl.createUser({email : 'toto7@test.com', password : 'Toto7pw12345'});
   PostCtrl.getAllPosts();
   PostCtrl.deleteOnePost();
 }).catch((error) => {
