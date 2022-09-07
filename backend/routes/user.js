@@ -7,9 +7,10 @@ const limiter = require('../middleware/rate-limits');
 const router = express.Router();
 
 // POST route to save a user account (email and hash of the password) in the MongoDB database
-router.post('/signup', pwdValidator, limiter.signup, userCtrl.signup);
+//router.post('/signup', pwdValidator, limiter.signup, userCtrl.createUser);
+router.post('/signup', userCtrl.createUser);
 
 // POST route to log in to the user account saved in the MongoDB database
-router.post('/login', limiter.login, userCtrl.login);
+//router.post('/login', limiter.login, userCtrl.login);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize');
-const db = require('../config/database');
+const Db = require('../config/database');
  
-const post = db.define('Post', {
+const Post = Db.define('Post', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
@@ -23,4 +23,4 @@ const post = db.define('Post', {
   freezeTableName: true
 });
 
-module.exports = post;
+module.exports = Post;

@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize');
-const db = require('../config/database');
+const Db = require('../config/database');
 
-const user = db.define('User', {
+const User = Db.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false
@@ -16,4 +16,4 @@ const user = db.define('User', {
   freezeTableName: true
 });
 
-module.exports = user;
+module.exports = User;
