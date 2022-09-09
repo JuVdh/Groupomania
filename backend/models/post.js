@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize');
 const Db = require('../config/database');
  
-const Post = Db.define('Post', {
+const Post = Db.define('post', {
   title: {
     type: DataTypes.STRING,
     allowNull: false

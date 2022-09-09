@@ -11,6 +11,6 @@ const router = express.Router();
 router.post('/signup', userCtrl.createUser);
 
 // POST route to log in to the user account saved in the MongoDB database
-//router.post('/login', limiter.login, userCtrl.login);
+router.post('/login', userCtrl.login);
 
 module.exports = router;

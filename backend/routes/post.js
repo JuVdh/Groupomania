@@ -12,14 +12,16 @@ const router = express.Router();
 
 // POST route to save a sauce in the MongoDB database
 
+router.post('/', auth, postCtrl.createPost);
 //router.post('/', auth, multer, postCtrl.createSauce);
 //router.post('/', postCtrl.createPost);
 
 // // PUT route to update the id Sauce in the MongoDB database
-// router.put('/:id', auth, multer, postCtrl.modifySauce);
+//router.put('/:id', auth, multer, postCtrl.modifySauce);
+router.put('/:id', auth, postCtrl.modifyPost);
 
 // // DELETE route to delete the id Sauce in the MongoDB database
-// router.delete('/:id', auth, postCtrl.deleteSauce);
+router.delete('/:id', auth, postCtrl.deletePost);
 
 // // GET route to return the id sauce of the MongoDB database when you click on it
 // router.get('/:id', auth, postCtrl.getOneSauce);

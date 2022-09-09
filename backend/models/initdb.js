@@ -13,11 +13,11 @@ let Init = async () => {
     console.error('Unable to connect to the database:', error);
   }
 
-  //Post.belongsTo(User, {onDelete: 'CASCADE'});
+  Post.belongsTo(User, {onDelete: 'CASCADE'});
   //Démarre 2 tâches en parallèle et on attend que les deux soient finies
 
     await User.sync({alter: true});
-    //await Post.sync({alter: true});
+    await Post.sync({alter: true});
 
   // await post.create({
   //   title: 'Titre de mon premier post',
