@@ -12,7 +12,7 @@ const router = express.Router();
 
 // POST route to save a sauce in the MongoDB database
 
-router.post('/', auth, postCtrl.createPost);
+router.post('/', auth, multer, postCtrl.createPost);
 //router.post('/', auth, multer, postCtrl.createSauce);
 //router.post('/', postCtrl.createPost);
 

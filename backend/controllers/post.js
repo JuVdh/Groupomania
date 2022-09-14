@@ -8,8 +8,11 @@ exports.createPost = (req, res) => {
     const postObject={
         title : req.body.title,
         content : req.body.content,
+        //attachment : req.body.attachment,
+        attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes : req.body.likes
     };
+    console.log(post.attachment);
     delete postObject.id;
     delete postObject.userId;
     const post = new Post({
@@ -32,7 +35,8 @@ exports.deletePost = (req, res) => {
         if (post.userId != req.auth.userId) {
             return res.status(403).json({ message: 'not authorized to deletePost !' })
             } else {
-                //const filename = post.imageUrl.split('/images/')[1];
+                const filename = post.attachment.split('/images/')[1];
+                //console.log(filename);
                 //fs.unlink(`images/${filename}`, () => {
                     Post.destroy({where: {id:req.params.id, userId: req.auth.userId}})
                     .then(() => { res.status(200).json({message: 'Post deleted !'})})
