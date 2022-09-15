@@ -11,11 +11,9 @@ const MIME_TYPES = {
 // To tell multer where to save incoming files by using its diskStorage() method to configure path and filename
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
-    console.log(file.originalname);
     callback(null, 'images');
   },
   filename: (req, file, callback) => {
-    //console.log(file.originalname);
     const name = file.originalname.split(' ').join('_');
     const extension = MIME_TYPES[file.mimetype];
     callback(null, name + Date.now() + '.' + extension);

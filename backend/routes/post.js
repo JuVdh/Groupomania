@@ -8,7 +8,7 @@ const router = express.Router();
 
 // GET route to return all the sauces present in the MongoDB database
 //router.get('/', auth, postCtrl.getAllPosts);
-//router.get('/', postCtrl.getAllPosts);
+router.get('/', auth, postCtrl.getAllPosts);
 
 // POST route to save a sauce in the MongoDB database
 
@@ -24,7 +24,7 @@ router.put('/:id', auth, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
 
 // // GET route to return the id sauce of the MongoDB database when you click on it
-// router.get('/:id', auth, postCtrl.getOneSauce);
+router.get('/:id', auth, postCtrl.getOnePost);
 
 // // POST route to set the "Like" status of the id sauce for the provided userId
 // router.post('/:id/like', auth, postCtrl.addLikeStatus);
