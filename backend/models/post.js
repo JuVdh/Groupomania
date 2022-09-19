@@ -5,10 +5,12 @@ const Post = Db.define('post', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
+    
   },
   content: {
     type: DataTypes.TEXT,
-    allowNull: false
+    defaultValue: null
+    //allowNull: false
   },
   attachment: {
     type: DataTypes.STRING,
@@ -16,7 +18,7 @@ const Post = Db.define('post', {
   },
   likes: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    //allowNull: false,
     defaultValue: 0
   }
 }, 

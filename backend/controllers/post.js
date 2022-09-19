@@ -6,19 +6,6 @@ const fs = require('fs');
 // POST route controller to save a post in the MariaDB database
 exports.createPost = (req, res) => {
    
-    // const postObject={
-    //     title : req.body.title,
-    //     content : req.body.content,
-    //     //attachment : req.body.attachment,
-    //     attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        
-    // };
-    // const post = new Post({
-    //     ...postObject,
-    //     userId: req.auth.userId
-    // });
-    //console.log(post.userId);
-    //post.save()
     Post.create({
         title : req.body.title,
         content : req.body.content,
@@ -36,19 +23,17 @@ exports.deletePost = (req, res) => {
     console.log(req.params.id);
     Post.findOne( {where : { id: req.params.id}})
     .then(post => {
-        console.log(post.userId);
-        console.log(req.auth.userId);
         if (post.userId != req.auth.userId) {
             return res.status(403).json({ message: 'not authorized to deletePost !' })
             } else {
-                const filename = post.attachment.split('/images/')[1];
-                //console.log(filename);
-                //fs.unlink(`images/${ filename }`, error => error && console.error(error));
-                //fs.unlink(`images/${filename}`, () => {
                     Post.destroy({where: {id:req.params.id, userId: req.auth.userId}})
-                    .then(() => { res.status(200).json({message: 'Post deleted !'})})
+                    .then(p => {
+                        if (p.attachment) {
+                        const filename = p.attachment.split('/images/')[1];
+                        fs.unlink(`images/${ filename }`, error => error && console.error(error));
+                        }
+                        res.status(200).json({message: 'Post deleted !'})})
                     .catch(error => res.status(400).json({ message: `delete is not working! ${error}` }))
-                //});
             }
         })
     .catch( error => {
@@ -60,31 +45,17 @@ exports.deletePost = (req, res) => {
 
 // PUT route controller to update an existing Post in the MariaDBdatabase
 exports.modifyPost = (req, res) => {
-    // const sauceObject = req.file ? {
-    //     ...JSON.parse(req.body.sauce),
-    //     imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    // } : { ...req.body };
-  
-    const postObject={
-        title : req.body.title,
-        content : req.body.content,
-        likes : req.body.likes
-    };
-    delete postObject.userId;
-
+    const postObject= (req.file || req.content) ? {
+        ...JSON.parse(req.body.post),
+        attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        } : { ...req.body};
     Post.findOne({where: {id: req.params.id}})
     .then((post) => {
         if (post.userId != req.auth.userId) {
             return res.status(403).json({ message: 'not authorized to modifyPost !'})
             } else {
-                //Post.update({where: { id: req.params.id}, { ...postObject, id: req.params.id}})
-                post.set(postObject);
-                post.save()
-                // Post.update({
-                //     title : req.body.title,
-                //     content : req.body.content,
-                //     likes : req.body.likes
-                // })
+                postObject.userId=req.auth.userId;
+                Post.create(postObject)
                 .then(() => res.status(201).json({message : 'Post modified!'}))
                 .catch(error => res.status(400).json({ message: `update is not working ! ${error}` }))
             }

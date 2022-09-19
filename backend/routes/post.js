@@ -18,7 +18,7 @@ router.post('/', auth, multer, postCtrl.createPost);
 
 // // PUT route to update the id Sauce in the MongoDB database
 //router.put('/:id', auth, multer, postCtrl.modifySauce);
-router.put('/:id', auth, postCtrl.modifyPost);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
 
 // // DELETE route to delete the id Sauce in the MongoDB database
 router.delete('/:id', auth, postCtrl.deletePost);
