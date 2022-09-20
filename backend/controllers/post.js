@@ -5,18 +5,29 @@ const fs = require('fs');
 
 // POST route controller to save a post in the MariaDB database
 exports.createPost = (req, res) => {
-   
-    Post.create({
+   if ((!req.body.content) && (!req.file)){
+    res.status(400).json({message: 'your post should contain at least text or attached file' });
+   } else {
+    const postObject = req.file ? {
         title : req.body.title,
         content : req.body.content,
-        //attachment : req.body.attachment,
         attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
-        userId: req.auth.userId
         
-    })
+    } : { ...req.body };
+    postObject.userId=req.auth.userId;
+    // Post.create({
+    //     title : req.body.title,
+    //     content : req.body.content,
+    //     attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    //     userId: req.auth.userId
+        
+    // })
+    Post.create(postObject)
     .then(() => { res.status(201).json({message: 'post recorded !' })})
-    .catch(error => res.status(400).json({ message: `save is not working ! ${error}` }))
-};
+    .catch(error => res.status(400).json({ message: `create post is not working ! ${error}` }))
+    
+     
+}};
 
 // DELETE route controller to delete an existing Post in the MariaDB database
 exports.deletePost = (req, res) => {
@@ -45,8 +56,12 @@ exports.deletePost = (req, res) => {
 
 // PUT route controller to update an existing Post in the MariaDBdatabase
 exports.modifyPost = (req, res) => {
-    const postObject= (req.file || req.content) ? {
-        ...JSON.parse(req.body.post),
+    // const postObject= (req.file || req.content) ? {
+    //     ...JSON.parse(req.body.post),
+    //     attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+    //     } : { ...req.body};
+    const postObject= req.file ? {
+        ...req.body,
         attachment : `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         } : { ...req.body};
     Post.findOne({where: {id: req.params.id}})
@@ -55,7 +70,8 @@ exports.modifyPost = (req, res) => {
             return res.status(403).json({ message: 'not authorized to modifyPost !'})
             } else {
                 postObject.userId=req.auth.userId;
-                Post.create(postObject)
+                //Post.create(postObject)
+                post.update(postObject)
                 .then(() => res.status(201).json({message : 'Post modified!'}))
                 .catch(error => res.status(400).json({ message: `update is not working ! ${error}` }))
             }
