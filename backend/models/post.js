@@ -15,12 +15,12 @@ const Post = Db.define('post', {
   attachment: {
     type: DataTypes.STRING,
     defaultValue: null
-  },
-  likes: {
-    type: DataTypes.INTEGER,
-    //allowNull: false,
-    defaultValue: 0
   }
+//   likes: {
+//     type: DataTypes.INTEGER,
+//     //allowNull: false,
+//     defaultValue: 0
+//   }
 }, 
 {
   freezeTableName: true

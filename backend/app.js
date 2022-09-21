@@ -9,6 +9,7 @@ const initDB = require('./models/initdb');
 
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const likeRoutes = require('./routes/like');
 const path = require('path');
 
 
@@ -47,6 +48,7 @@ initDB().then(() => {
   app.use('/images', express.static(path.join(__dirname, 'images')));
   app.use('/api/auth', userRoutes);
   app.use('/api/posts',postRoutes);
+  app.use('/api/posts',likeRoutes);
   // UserCtrl.createUser({email : 'toto7@test.com', password : 'Toto7pw12345'});
   // PostCtrl.getAllPosts();
   // PostCtrl.deleteOnePost();

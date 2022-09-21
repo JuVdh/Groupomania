@@ -15,14 +15,14 @@ let Init = async () => {
   }
 
   Post.belongsTo(User, {onDelete: 'CASCADE'});
-  // Like.belongsTo(User, {onDelete: 'CASCADE'});
-  // Like.belongsTo(Post, {onDelete: 'CASCADE'});
+  Like.belongsTo(User, {onDelete: 'CASCADE'});
+  Like.belongsTo(Post, {onDelete: 'CASCADE'});
 
   //Démarre 2 tâches en parallèle et on attend que les deux soient finies
 
     await User.sync({alter: true});
     await Post.sync({alter: true});
-    //await Like.sync({alter: true});
+    await Like.sync({alter: true});
 
   // await post.create({
   //   title: 'Titre de mon premier post',
