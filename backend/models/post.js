@@ -5,7 +5,6 @@ const Post = Db.define('post', {
   title: {
     type: DataTypes.STRING,
     allowNull: false
-    
   },
   content: {
     type: DataTypes.TEXT,
@@ -16,11 +15,6 @@ const Post = Db.define('post', {
     type: DataTypes.STRING,
     defaultValue: null
   }
-//   likes: {
-//     type: DataTypes.INTEGER,
-//     //allowNull: false,
-//     defaultValue: 0
-//   }
 }, 
 {
   freezeTableName: true

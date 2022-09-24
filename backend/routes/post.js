@@ -3,27 +3,22 @@ const auth = require('../middleware/auth');
 const multer = require ('../middleware/multer-config');
 const postCtrl = require('../controllers/post');
 
-// To create separate routers for each main application sauce route by using the express.Router() method
+// To create separate routers for each main application post route by using the express.Router() method
 const router = express.Router();
 
-// GET route to return all the sauces present in the MongoDB database
-//router.get('/', auth, postCtrl.getAllPosts);
+// GET route to return all the posts present in the MariaDB database
 router.get('/', auth, postCtrl.getAllPosts);
 
-// POST route to save a sauce in the MongoDB database
-
+// POST route to save a post in the MariaDB database
 router.post('/', auth, multer, postCtrl.createPost);
-//router.post('/', auth, multer, postCtrl.createSauce);
-//router.post('/', postCtrl.createPost);
 
-// // PUT route to update the id Sauce in the MongoDB database
-//router.put('/:id', auth, multer, postCtrl.modifySauce);
+// PATCH route to update the id Post in the MariaDB database
 router.patch('/:id', auth, multer, postCtrl.modifyPost);
 
-// // DELETE route to delete the id Sauce in the MongoDB database
+// // DELETE route to delete the id Post in the MariaDB database
 router.delete('/:id', auth, postCtrl.deletePost);
 
-// // GET route to return the id sauce of the MongoDB database when you click on it
+// // GET route to return the id post of the MariaDB database when you click on it
 router.get('/:id', auth, postCtrl.getOnePost);
 
 // // POST route to set the "Like" status of the id sauce for the provided userId

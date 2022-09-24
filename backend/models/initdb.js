@@ -18,24 +18,9 @@ let Init = async () => {
   Like.belongsTo(User, {onDelete: 'CASCADE'});
   Like.belongsTo(Post, {onDelete: 'CASCADE'});
 
-  //Démarre 2 tâches en parallèle et on attend que les deux soient finies
-
-    await User.sync({alter: true});
-    await Post.sync({alter: true});
-    await Like.sync({alter: true});
-
-  // await post.create({
-  //   title: 'Titre de mon premier post',
-  //   content: 'mon premier post sur groupomania',
-  //   likes: 1
-  // });
-
-  // await Promise.all([
-  //   (async()=> await User.sync({force: true}))(),
-  //   (async()=> await Post.sync({force: true}))()
-  // ]);
-
-  //return post;
+  await User.sync({alter: true});
+  await Post.sync({alter: true});
+  await Like.sync({alter: true});
 }
 
 module.exports = Init;

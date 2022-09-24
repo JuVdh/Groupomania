@@ -3,16 +3,28 @@ const Post = require('../models/post');
 
 // POST route controller to save a like in the MariaDB database
 exports.addLike = (req, res) => {
-    Post.findOne({where : { id: req.params.id}})
-    .then(post => {
+    Like.findOne({where : { postId: req.params.id, userId: req.auth.userId}})
+    .then(like => {
+        if (like) {
+            return res.status(403).json({ message: 'already liked !' });
+        }
+        
+        
         // if (post.userId != req.auth.userId) {
         //    return res.status(403).json({ message: 'not authorized to addLike !' })
         //     } else {
                     
                 Like.create({
-                    likes : 1
+                    likes : req.body.likes,
+                    postId : req.params.id,
+                    userId : req.auth.userId
                 })
-                .then(() => { res.status(201).json({message: 'like recorded !' })})
+                //.then(() => { res.status(201).json({message: 'like recorded !' })})
+                .then(like=> {
+                    
+                    res.status(201).json(like);
+                    
+                })
                 .catch(error => res.status(400).json({ message: `add like is not working ! ${error}` }))
             // }
         })
