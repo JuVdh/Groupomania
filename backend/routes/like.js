@@ -7,6 +7,8 @@ const likeCtrl = require('../controllers/like');
 const router = express.Router();
 
 // POST route to save a like to the id post in the MariaDB database
-router.post('/:id', auth, likeCtrl.addLike);
+router.post('/:id', auth, likeCtrl.totalLikes);
+router.post('/:id/likes/', auth, likeCtrl.addLike);
+router.delete('/:id/likes/', auth, likeCtrl.deleteLike);
 
 module.exports = router;

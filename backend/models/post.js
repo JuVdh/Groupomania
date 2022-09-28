@@ -14,6 +14,10 @@ const Post = Db.define('post', {
   attachment: {
     type: DataTypes.STRING,
     defaultValue: null
+  },
+  likes: {
+    type: DataTypes.INTEGER, 
+    defaultValue: null
   }
 }, 
 {

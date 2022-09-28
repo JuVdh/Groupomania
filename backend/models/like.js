@@ -1,7 +1,7 @@
 const DataTypes = require('sequelize');
 const Db = require('../config/database');
 
-const Like = Db.define('like', {
+const Like = Db.define('likes', {
   likes: {
     type: DataTypes.INTEGER,
     defaultValue: 0
