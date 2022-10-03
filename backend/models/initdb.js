@@ -17,6 +17,7 @@ let Init = async () => {
   Post.belongsTo(User, {onDelete: 'CASCADE'});
   Like.belongsTo(User, {onDelete: 'CASCADE'});
   Like.belongsTo(Post, {onDelete: 'CASCADE'});
+  Post.hasMany(Like);
 
   await User.sync({alter: true});
   await Post.sync({alter: true});

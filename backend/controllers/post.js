@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const Like = require('../models/like');
 
 // Use of fs package which provides access to functions that allow us to modify the file system, including functions to delete files
 const fs = require('fs');
@@ -80,15 +81,21 @@ exports.modifyPost = (req, res) => {
 };
 
 // GET route controller to return one post of the MariaDB database when you click on it
-exports.getOnePost = (req, res, next) => {
+exports.getOnePost = (req, res) => {
     console.log(req.params.id);
     Post.findOne({ where : {id: req.params.id }})
-    .then(post => res.status(200).json(post))
+    .then(async post => {
+        console.log(post);
+        const likeCount= await post.countLikes();
+        const alreadyLiked = !!await Like.findOne({where : {postId: req.params.id, userId : req.auth.userId}});
+        res.send({post, likeCount, alreadyLiked});
+        //res.status(200).json(post);
+    })
     .catch(error => res.status(404).json({ message: `find post is not working ! ${error}` }))
 };
 
 // GET route controller to return all the posts present in the MariaDB database
-exports.getAllPosts = (req, res, next) => {
+exports.getAllPosts = (req, res) => {
     Post.findAll({
         order: [['updatedAt', 'DESC']]
     })

@@ -29,6 +29,7 @@ exports.deleteLike = (req, res) => {
     .then(like => {
         
         if (like.userId != req.auth.userId) {
+            // console.log(req.auth.userId);
             return res.status(403).json({ message: 'not authorized to deleteLike !' })
              } else {
                 
@@ -40,23 +41,29 @@ exports.deleteLike = (req, res) => {
     .catch( error => {
         res.status(404).json({ message: `find is not working ! ${error}` })
     });
-    // console.log(req.auth.userId);
-    // console.log("I want to delete the like for the post");
-    // console.log(req.params.id);
 };
 
 exports.totalLikes = async (req, res) => {
+    try {
+        const likeCount = await Like.count({ where : {postId : req.params.id}});
+        const alreadyLiked = !!await Like.findOne({where : {postId: req.params.id, userId : req.auth.userId}});
+        res.status(200).json({likeCount,alreadyLiked});
+    } catch (error) {
+        res.status(500).json({message :`count total likes is not working ! ${error}` });
+    }
+}
+// exports.totalLikes = async (req, res) => {
       
-    const { count, rows } = await Like.findAndCountAll({where : { postId: req.params.id}});
-    console.log(count);
-    Post.findOne({where : {id : req.params.id}})
-    .then(post =>{
-        post.likes = count;
-        post.save();
-        return res.status(200).json(post)
-    })
+//     const { count, rows } = await Like.findAndCountAll({where : { postId: req.params.id}});
+//     console.log(count);
+//     Post.findOne({where : {id : req.params.id}})
+//     .then(post =>{
+//         post.likes = count;
+//         post.save();
+//         return res.status(200).json(post)
+//     })
         
-    .catch( error => {
-        res.status(404).json({ message: `find is not working ! ${error}` })
-    });
-};
+//     .catch( error => {
+//         res.status(404).json({ message: `find is not working ! ${error}` })
+//     });
+// };
