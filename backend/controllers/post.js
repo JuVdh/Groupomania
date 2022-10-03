@@ -3,6 +3,7 @@ const Like = require('../models/like');
 
 // Use of fs package which provides access to functions that allow us to modify the file system, including functions to delete files
 const fs = require('fs');
+const { addLikeStatus } = require('../../../HotTakes/backend/controllers/sauce');
 
 // POST route controller to save a post in the MariaDB database
 exports.createPost = (req, res) => {
@@ -95,12 +96,14 @@ exports.getOnePost = (req, res) => {
 };
 
 // GET route controller to return all the posts present in the MariaDB database
-exports.getAllPosts = (req, res) => {
-    Post.findAll({
-        order: [['updatedAt', 'DESC']]
-    })
-    .then(posts => res.status(200).json(posts))
-    .catch(error => res.status(404).json({ message: `find all the posts is not working ! ${error}` }))
+exports.getAllPosts = async (req, res) => {
+    const posts = await Post.findAll({
+        order: [['updatedAt', 'DESC']],
+        include: Like,
+    });
+
+    res.send(posts);
 };
- 
+    
+  
    
