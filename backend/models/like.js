@@ -2,13 +2,13 @@ const DataTypes = require('sequelize');
 const Db = require('../config/database');
 
 const Like = Db.define('likes', {
-  likes: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
-  }
-}, 
+	likes: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	}
+},
 {
-  freezeTableName: true
+	freezeTableName: true
 });
 
 module.exports = Like;

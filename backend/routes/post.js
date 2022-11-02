@@ -21,7 +21,4 @@ router.delete('/:id', auth, postCtrl.deletePost);
 // // GET route to return the id post of the MariaDB database when you click on it
 router.get('/:id', auth, postCtrl.getOnePost);
 
-// // POST route to set the "Like" status of the id sauce for the provided userId
-// router.post('/:id/like', auth, postCtrl.addLikeStatus);
-
 module.exports = router;
