@@ -1,0 +1,3 @@
+[submodule "Groupomania-frontend"]
+	path = Groupomania-frontend
+	url = https://github.com/JuVdh/Groupomania-frontend.git
