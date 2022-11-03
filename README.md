@@ -2,6 +2,12 @@
 
 This project was generated with [Vue CLI](https://cli.vuejs.org/config/) version 5.0.8.
 
+## Clone the GitHub repository
+
+Run `git clone https://github.com/JuVdh/Groupomania.git`. 
+Go to the root directory with `cd Groupomania`.
+Run `git submodule init` and then `git submodule update`.
+
 ## Import database
 
 From the directory containing the Groupomania.sql file, run `mysql -u root -p < Groupomania.sql`.
